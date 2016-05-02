@@ -25,6 +25,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 
 import okhttp3.Call;
@@ -109,10 +110,10 @@ public class MovieFragment extends Fragment {
     private void getMovies() {
         FetchMoviesTask moviesTask = new FetchMoviesTask();
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        String sort = sharedPrefs.getString(getString(R.string.pref_units_key), getString(R.string.pref_units_descending));
+        String sort = sharedPrefs.getString(getString(R.string.pref_units_key), getString(R.string.pref_units_popularity));
 
-        if (sort == getString(R.string.pref_units_ascending)) {
-            sort = getString(R.string.pref_units_ascending);
+        if (sort == getString(R.string.pref_units_release)) {
+            sort = getString(R.string.pref_units_release);
         }
 
         moviesTask.execute(sort);
@@ -127,12 +128,19 @@ public class MovieFragment extends Fragment {
             String movieString = null;
 
             final String appId = "YOUR_API_KEY";
+            final String releaseDate = Calendar.getInstance().get(Calendar.YEAR)+"12-31";
             final String sort = sortInput[0];
+
             final String urlBase = "https://api.themoviedb.org/3/discover/movie/?";
             final String appIdParam = "api_key";
+            final String releaseDateFilter = "primary_release_date.lte";
             final String sortParam = "sort_by";
 
-            Uri builtUri = Uri.parse(urlBase).buildUpon().appendQueryParameter(appIdParam, appId).appendQueryParameter(sortParam, sort).build();
+            Uri builtUri = Uri.parse(urlBase).buildUpon()
+                    .appendQueryParameter(appIdParam, appId)
+                    .appendQueryParameter(releaseDateFilter, releaseDate)
+                    .appendQueryParameter(sortParam, sort)
+                    .build();
             String url = builtUri.toString();
 
             try {
@@ -207,8 +215,10 @@ public class MovieFragment extends Fragment {
 
                 MovieObject movieObject = new MovieObject(movieTitle, movieId, moviePoster, movieRelease, movieRating, movieSummary);
 
-                movieObjects.add(movieObject);
-                moviePosters.add(moviePoster);
+                if (moviePoster.matches("(.*)jpg(.*)")) {
+                    movieObjects.add(movieObject);
+                    moviePosters.add(moviePoster);
+                }
             }
 
             String[] resultStrs = moviePosters.toArray(new String[moviePosters.size()]);

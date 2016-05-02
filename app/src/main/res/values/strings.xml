@@ -10,21 +10,21 @@
     <string name="pref_header_general">General</string>
 
     <!-- Movie Sort Settings -->
-    <string name="pref_units_label">Sort Movies Popularity</string>
-    <string name="pref_units_label_descending">Descending</string>
-    <string name="pref_units_label_ascending">Ascending</string>
+    <string name="pref_units_label">Sort Movies By</string>
+    <string name="pref_units_label_popularity">Popularity</string>
+    <string name="pref_units_label_release">Release Date</string>
     <string name="pref_units_key" translatable="false">units</string>
-    <string name="pref_units_descending" translatable="false">popularity.desc</string>
-    <string name="pref_units_ascending" translatable="false">popularity.asc</string>
+    <string name="pref_units_popularity" translatable="false">popularity.desc</string>
+    <string name="pref_units_release" translatable="false">release_date.desc</string>
 
 
     <string-array name="pref_units_options">
-        <item>@string/pref_units_label_descending</item>
-        <item>@string/pref_units_label_ascending</item>
+        <item>@string/pref_units_label_popularity</item>
+        <item>@string/pref_units_label_release</item>
     </string-array>
 
     <string-array name="pref_units_values">
-        <item>@string/pref_units_descending</item>
-        <item>@string/pref_units_ascending</item>
+        <item>@string/pref_units_popularity</item>
+        <item>@string/pref_units_release</item>
     </string-array>
 </resources>
