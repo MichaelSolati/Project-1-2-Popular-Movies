@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<com.michaelsolati.popularmovies.DynamicImageView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:scaleType="centerCrop"
+    android:contentDescription="Movie Poster"
+    android:id="@+id/list_item_movie_imageview" />
