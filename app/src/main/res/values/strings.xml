@@ -12,19 +12,19 @@
     <!-- Movie Sort Settings -->
     <string name="pref_units_label">Sort Movies By</string>
     <string name="pref_units_label_popularity">Popularity</string>
-    <string name="pref_units_label_release">Release Date</string>
+    <string name="pref_units_label_rating">Most Rated</string>
     <string name="pref_units_key" translatable="false">units</string>
     <string name="pref_units_popularity" translatable="false">popularity.desc</string>
-    <string name="pref_units_release" translatable="false">release_date.desc</string>
+    <string name="pref_units_rating" translatable="false">vote_count.desc</string>
 
 
     <string-array name="pref_units_options">
         <item>@string/pref_units_label_popularity</item>
-        <item>@string/pref_units_label_release</item>
+        <item>@string/pref_units_label_rating</item>
     </string-array>
 
     <string-array name="pref_units_values">
         <item>@string/pref_units_popularity</item>
-        <item>@string/pref_units_release</item>
+        <item>@string/pref_units_rating</item>
     </string-array>
 </resources>

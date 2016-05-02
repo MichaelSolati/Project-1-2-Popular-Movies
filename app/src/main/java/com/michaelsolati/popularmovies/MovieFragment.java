@@ -112,8 +112,8 @@ public class MovieFragment extends Fragment {
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
         String sort = sharedPrefs.getString(getString(R.string.pref_units_key), getString(R.string.pref_units_popularity));
 
-        if (sort == getString(R.string.pref_units_release)) {
-            sort = getString(R.string.pref_units_release);
+        if (sort == getString(R.string.pref_units_rating)) {
+            sort = getString(R.string.pref_units_rating);
         }
 
         moviesTask.execute(sort);
@@ -128,20 +128,24 @@ public class MovieFragment extends Fragment {
             String movieString = null;
 
             final String appId = "YOUR_API_KEY";
-            final String releaseDate = Calendar.getInstance().get(Calendar.YEAR)+"12-31";
+            final String releaseDate = Calendar.getInstance().get(Calendar.YEAR)+"-12-31";
+            final String language = "en";
             final String sort = sortInput[0];
 
             final String urlBase = "https://api.themoviedb.org/3/discover/movie/?";
             final String appIdParam = "api_key";
-            final String releaseDateFilter = "primary_release_date.lte";
+            final String releaseDateParam = "primary_release_date.lte";
+            final String languageParam = "language";
             final String sortParam = "sort_by";
 
             Uri builtUri = Uri.parse(urlBase).buildUpon()
                     .appendQueryParameter(appIdParam, appId)
-                    .appendQueryParameter(releaseDateFilter, releaseDate)
+                    .appendQueryParameter(releaseDateParam, releaseDate)
+                    .appendQueryParameter(languageParam, language)
                     .appendQueryParameter(sortParam, sort)
                     .build();
             String url = builtUri.toString();
+            Log.d(LOG_TAG, url);
 
             try {
 
@@ -203,6 +207,7 @@ public class MovieFragment extends Fragment {
             JSONObject movieJson = new JSONObject(movieString);
             JSONArray movieArray = movieJson.getJSONArray(OWM_RESULTS);
             List<String> moviePosters = new ArrayList<>();
+            movieObjects.clear();
             for (int i = 0; i < movieArray.length(); i++) {
                 // Get the JSON object representing the day
                 JSONObject movie = movieArray.getJSONObject(i);
