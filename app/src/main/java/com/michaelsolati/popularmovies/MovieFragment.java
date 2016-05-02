@@ -127,7 +127,6 @@ public class MovieFragment extends Fragment {
             // Will contain the raw JSON response as a string.
             String movieString = null;
 
-            final String appId = "YOUR_API_KEY";
             final String releaseDate = Calendar.getInstance().get(Calendar.YEAR)+"-12-31";
             final String language = "en";
             final String sort = sortInput[0];
@@ -139,13 +138,12 @@ public class MovieFragment extends Fragment {
             final String sortParam = "sort_by";
 
             Uri builtUri = Uri.parse(urlBase).buildUpon()
-                    .appendQueryParameter(appIdParam, appId)
+                    .appendQueryParameter(appIdParam, PrivateVariables.getAppId())
                     .appendQueryParameter(releaseDateParam, releaseDate)
                     .appendQueryParameter(languageParam, language)
                     .appendQueryParameter(sortParam, sort)
                     .build();
             String url = builtUri.toString();
-            Log.d(LOG_TAG, url);
 
             try {
 
@@ -230,5 +228,6 @@ public class MovieFragment extends Fragment {
 
             return resultStrs;
         }
+
     }
 }

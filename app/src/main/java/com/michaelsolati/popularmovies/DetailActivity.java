@@ -1,6 +1,7 @@
 package com.michaelsolati.popularmovies;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
@@ -13,12 +14,22 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.squareup.picasso.Picasso;
 
 public class DetailActivity extends AppCompatActivity {
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    private GoogleApiClient client;
+    static String trailerUrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +40,9 @@ public class DetailActivity extends AppCompatActivity {
                     .add(R.id.container, new DetailFragment())
                     .commit();
         }
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
 
@@ -53,6 +67,46 @@ public class DetailActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client.connect();
+        Action viewAction = Action.newAction(
+                Action.TYPE_VIEW, // TODO: choose an action type.
+                "Detail Page", // TODO: Define a title for the content shown.
+                // TODO: If you have web page content that matches this app activity's content,
+                // make sure this auto-generated web page URL is correct.
+                // Otherwise, set the URL to null.
+                Uri.parse("http://host/path"),
+                // TODO: Make sure this auto-generated app URL is correct.
+                Uri.parse("android-app://com.michaelsolati.popularmovies/http/host/path")
+        );
+        AppIndex.AppIndexApi.start(client, viewAction);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        Action viewAction = Action.newAction(
+                Action.TYPE_VIEW, // TODO: choose an action type.
+                "Detail Page", // TODO: Define a title for the content shown.
+                // TODO: If you have web page content that matches this app activity's content,
+                // make sure this auto-generated web page URL is correct.
+                // Otherwise, set the URL to null.
+                Uri.parse("http://host/path"),
+                // TODO: Make sure this auto-generated app URL is correct.
+                Uri.parse("android-app://com.michaelsolati.popularmovies/http/host/path")
+        );
+        AppIndex.AppIndexApi.end(client, viewAction);
+        client.disconnect();
     }
 
     /**
@@ -98,6 +152,15 @@ public class DetailActivity extends AppCompatActivity {
                 // Set Movie Rating
                 ((TextView) rootView.findViewById(R.id.detail_rating)).setText(movieObject.getRating());
 
+                // Set Movie Trailer
+                Button button = (Button) rootView.findViewById(R.id.detail_trailer);
+                button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        openYouTube(movieObject.getTrailerUrl());
+                    }
+                });
+
                 // Set Movie Summary
                 ((TextView) rootView.findViewById(R.id.detail_summary)).setText(movieObject.getSummary());
             }
@@ -118,7 +181,7 @@ public class DetailActivity extends AppCompatActivity {
 
             // Attach an intent to this ShareActionProvider.  You can update this at any time,
             // like when the user selects a new piece of data they might like to share.
-            if (mShareActionProvider != null ) {
+            if (mShareActionProvider != null) {
                 mShareActionProvider.setShareIntent(createShareMovieIntent());
             } else {
                 Log.d(LOG_TAG, "Share Action Provider is null?");
@@ -131,6 +194,11 @@ public class DetailActivity extends AppCompatActivity {
             shareIntent.setType("text/plain");
             shareIntent.putExtra(Intent.EXTRA_TEXT, movieObject.getName() + MOVIE_SHARE_STRING);
             return shareIntent;
+        }
+
+        public void openYouTube(String link) {
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(link));
+            startActivity(intent);
         }
     }
 }
