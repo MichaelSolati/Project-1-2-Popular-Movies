@@ -89,7 +89,11 @@ public class DetailActivity extends AppCompatActivity {
                 ((TextView) rootView.findViewById(R.id.detail_name)).setText(movieObject.getName());
 
                 // Set Movie Release
-                ((TextView) rootView.findViewById(R.id.detail_release)).setText(movieObject.getRelease());
+                String movieRelease = movieObject.getRelease();
+                if (movieRelease.length() != 0) {
+                    movieRelease = movieRelease.substring(5, 7) + "/" + movieRelease.substring(8, 10) + "/" + movieRelease.substring(2, 4);
+                }
+                ((TextView) rootView.findViewById(R.id.detail_release)).setText(movieRelease);
 
                 // Set Movie Rating
                 ((TextView) rootView.findViewById(R.id.detail_rating)).setText(movieObject.getRating());

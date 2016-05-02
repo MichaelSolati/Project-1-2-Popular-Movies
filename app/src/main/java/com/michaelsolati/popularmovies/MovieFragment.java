@@ -112,8 +112,9 @@ public class MovieFragment extends Fragment {
         String sort = sharedPrefs.getString(getString(R.string.pref_units_key), getString(R.string.pref_units_descending));
 
         if (sort == getString(R.string.pref_units_ascending)) {
-            sort = "popularity.asc";
+            sort = getString(R.string.pref_units_ascending);
         }
+
         moviesTask.execute(sort);
     }
 

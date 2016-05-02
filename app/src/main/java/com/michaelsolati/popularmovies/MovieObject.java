@@ -20,7 +20,7 @@ public class MovieObject implements Parcelable {
         name = movieName;
         id = movieId;
         poster = "http://image.tmdb.org/t/p/w500/" + moviePoster;
-        release = movieRelease.substring(5,7)+"/"+movieRelease.substring(8,10)+"/"+movieRelease.substring(2,4);
+        release = movieRelease;
         rating = movieRating;
         summary = movieSummary;
     }
