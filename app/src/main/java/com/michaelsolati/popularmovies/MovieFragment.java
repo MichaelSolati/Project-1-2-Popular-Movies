@@ -1,5 +1,6 @@
 package com.michaelsolati.popularmovies;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -41,6 +42,7 @@ public class MovieFragment extends Fragment {
     private ArrayAdapter<String> movieNames;
     List<Object> movieObjects = new ArrayList<>();
     private GridView mGridView;
+    private ProgressDialog pd;
 
     public MovieFragment() {
     }
@@ -112,15 +114,17 @@ public class MovieFragment extends Fragment {
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
         String sort = sharedPrefs.getString(getString(R.string.pref_units_key), getString(R.string.pref_units_popularity));
 
-        if (sort == getString(R.string.pref_units_rating)) {
-            sort = getString(R.string.pref_units_rating);
-        }
-
         moviesTask.execute(sort);
     }
 
     public class FetchMoviesTask extends AsyncTask<String, Void, String[]> {
         private final String LOG_TAG = FetchMoviesTask.class.getSimpleName();
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            pd=ProgressDialog.show(getActivity(),"","Fetching Movies",false);
+        }
 
         @Override
         protected String[] doInBackground(String... sortInput) {
@@ -178,6 +182,7 @@ public class MovieFragment extends Fragment {
         protected void onPostExecute(String[] results) {
             if (results != null) {
                 movieNames.clear();
+                pd.dismiss();
                 movieNames.addAll(results);
             }
         }

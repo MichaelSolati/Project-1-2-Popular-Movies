@@ -6,25 +6,31 @@
     <string name="title_activity_settings">Settings</string>
     <string name="action_share">Share</string>
 
+    <string name="detail_trailer">Watch Trailer</string>
+
     <!-- Strings related to General settings -->
     <string name="pref_header_general">General</string>
 
     <!-- Movie Sort Settings -->
-    <string name="pref_units_label">Sort Movies By</string>
-    <string name="pref_units_label_popularity">Popularity</string>
-    <string name="pref_units_label_rating">Most Rated</string>
+    <string name="pref_units_label">Sort Movies</string>
+    <string name="pref_units_label_popularity">Most Popular</string>
+    <string name="pref_units_label_rating">Highest Rated</string>
+    <string name="pref_units_label_rating_count">Most Rated</string>
     <string name="pref_units_key" translatable="false">units</string>
     <string name="pref_units_popularity" translatable="false">popularity.desc</string>
-    <string name="pref_units_rating" translatable="false">vote_count.desc</string>
+    <string name="pref_units_rating" translatable="false">vote_average.desc</string>
+    <string name="pref_units_rating_count" translatable="false">vote_count.desc</string>
 
 
     <string-array name="pref_units_options">
         <item>@string/pref_units_label_popularity</item>
         <item>@string/pref_units_label_rating</item>
+        <item>@string/pref_units_label_rating_count</item>
     </string-array>
 
     <string-array name="pref_units_values">
         <item>@string/pref_units_popularity</item>
         <item>@string/pref_units_rating</item>
+        <item>@string/pref_units_rating_count</item>
     </string-array>
 </resources>

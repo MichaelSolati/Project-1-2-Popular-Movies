@@ -26,6 +26,7 @@ public class MovieObject implements Parcelable {
     private String rating = "";
     private String summary = "";
     private String trailerUrl = "";
+    private boolean ifTrailer = false;
 
     MovieObject(String movieName, String movieId, String moviePoster, String movieRelease, String movieRating, String movieSummary) {
 
@@ -36,6 +37,7 @@ public class MovieObject implements Parcelable {
         for (int i = 0; i < Math.round(Double.parseDouble(movieRating)); i++) {
             rating += "\u2B50️️";
         }
+        rating += " ("+movieRating+")";
         summary = movieSummary;
 
         FetchTrailerTask trailerTask = new FetchTrailerTask();
@@ -50,6 +52,7 @@ public class MovieObject implements Parcelable {
         rating = in.readString();
         summary = in.readString();
         trailerUrl = in.readString();
+        ifTrailer = in.readByte() != 0;
     }
 
     public static final Creator<MovieObject> CREATOR = new Creator<MovieObject>() {
@@ -88,6 +91,8 @@ public class MovieObject implements Parcelable {
 
     public String getTrailerUrl() { return trailerUrl; }
 
+    public boolean getIfTrailer() { return ifTrailer; }
+
     @Override
     public int describeContents() {
         return 0;
@@ -102,6 +107,7 @@ public class MovieObject implements Parcelable {
         dest.writeString(rating);
         dest.writeString(summary);
         dest.writeString(trailerUrl);
+        dest.writeByte((byte) (ifTrailer ? 1 : 0));
     }
 
     public class FetchTrailerTask extends AsyncTask<String, Void, String[]> {
@@ -145,8 +151,9 @@ public class MovieObject implements Parcelable {
                 String movieTrailer = movie.getString(key);
 
                 trailerUrl = "https://www.youtube.com/watch?v=" + movieTrailer;
+                ifTrailer = true;
             } catch (Exception e) {
-                Log.e(LOG_TAG, "Error ", e);
+                ifTrailer = false;
             }
 
             return null;

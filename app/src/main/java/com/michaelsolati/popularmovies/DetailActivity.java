@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
@@ -157,7 +158,11 @@ public class DetailActivity extends AppCompatActivity {
                 button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        openYouTube(movieObject.getTrailerUrl());
+                        if (movieObject.getIfTrailer()) {
+                            openYouTube(movieObject.getTrailerUrl());
+                        } else {
+                            Toast.makeText(getActivity(),"No Trailer Found", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 });
 
