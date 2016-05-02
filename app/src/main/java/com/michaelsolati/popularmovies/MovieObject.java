@@ -19,13 +19,13 @@ import okhttp3.Response;
  */
 
 public class MovieObject implements Parcelable {
-    private String name;
-    private String id;
-    private String poster;
-    private String release;
-    private String rating;
-    private String summary;
-    private String trailerUrl;
+    private String name = "";
+    private String id = "";
+    private String poster = "";
+    private String release = "";
+    private String rating = "";
+    private String summary = "";
+    private String trailerUrl = "";
 
     MovieObject(String movieName, String movieId, String moviePoster, String movieRelease, String movieRating, String movieSummary) {
 
@@ -33,7 +33,9 @@ public class MovieObject implements Parcelable {
         id = movieId;
         poster = "http://image.tmdb.org/t/p/w500/" + moviePoster;
         release = movieRelease;
-        rating = movieRating;
+        for (int i = 0; i < Math.round(Double.parseDouble(movieRating)); i++) {
+            rating += "\u2B50️️";
+        }
         summary = movieSummary;
 
         FetchTrailerTask trailerTask = new FetchTrailerTask();
